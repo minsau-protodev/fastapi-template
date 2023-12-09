@@ -84,8 +84,6 @@ In order to show how the build process should work the project will build and pu
 
 - TAG: Image tag (ex. latest)
 - IMAGE_OWNER: Your docker hub user
-- CORE_IMAGE_NAME: Identifier for core image (ex. fastapi-template-core)
-- CELERY_IMAGE_NAME: Identifier for celery image (ex. fastapi-template-celery)
 - DOCKERHUB_PASS: Docker hub pass for push image
 - DOCKERHUB_USERNAME: Docker hub user for push image
 

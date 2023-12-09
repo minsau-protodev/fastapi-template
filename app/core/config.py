@@ -80,8 +80,6 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER: EmailStr
     FIRST_SUPERUSER_PASSWORD: str
     USERS_OPEN_REGISTRATION: bool = False
-    CELERY_BROKER_URL: str
-    CELERY_RESULT_BACKEND: str
 
     class Config:
         case_sensitive = True

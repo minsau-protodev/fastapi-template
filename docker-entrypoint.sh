@@ -1,16 +1,7 @@
 #!/usr/bin/env bash
 
 cd /opt/app
-# image can run in multiple modes
-if [[ "${RUNTYPE}" == "celery_worker" ]]; then
-    printf "started Docker container as celery worker"
-    exec celery -A app.core.celery_app.app worker -l info
-
-elif [[ "${RUNTYPE}" == "celery_beater" ]]; then
-    printf "started Docker container as celery worker"
-    exec celery -A app.core.celery_app.app beat -l info
-
-elif [[ "${RUNTYPE}" == "bash" ]]; then
+if [[ "${RUNTYPE}" == "bash" ]]; then
     printf "started Docker container as runtype \e[1;93mbash\e[0m\n"
     exec /bin/bash
 
