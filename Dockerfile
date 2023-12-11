@@ -1,4 +1,4 @@
-FROM python:3.10.5-slim-bullseye
+FROM python:3.12.0-slim-bullseye
 
 RUN groupadd -g 1337 app && \
     useradd -m -d /opt/app -u 1337 -g app app
