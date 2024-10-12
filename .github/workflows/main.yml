@@ -1,0 +1,65 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12'
+    - name: Install dependencies
+      run: |
+        pip install poetry
+        poetry install
+    - name: Run pre-commit
+      run: |
+        poetry run pre-commit install
+        poetry run pre-commit run -a
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13.7
+        env:
+          POSTGRES_DB: test
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12'
+    - name: Install dependencies
+      run: |
+        pip install poetry
+        poetry install
+    - name: Run tests
+      env:
+        POSTGRES_DB: test
+        POSTGRES_USER: test
+        POSTGRES_PASSWORD: test
+        POSTGRES_SERVER: localhost
+        POSTGRES_PORT: 5432
+        SENTRY_DSN: http://YourSentryDSN.com
+        FIRST_SUPERUSER: admin@yourproject.com
+        FIRST_SUPERUSER_PASSWORD: admin
+      run: |
+        mkdir test-results
+        poetry run pytest . -p no:warnings --junitxml=test-results/junit.xml
+    - name: Upload test results
+      uses: actions/upload-artifact@v2
+      with:

@@ -1,5 +1,7 @@
 # FastAPI Template
 
+[![CI/CD](https://github.com/minsau/fastapi-template/actions/workflows/main.yml/badge.svg)](https://github.com/minsau/fastapi-template/actions/workflows/main.yml)
+
 The purpose of this project is to be used as base boiler plate for future web application built with `Fast API`
 
 ## Development
@@ -45,30 +47,27 @@ Once you have it installed just need to launch (with make up) the core project a
 with this you can go to debug menu and click in green button to launch project.
 
 When you are inside the container you could go to VS Code test section and you can appreciate that test discovery is active.
-## Continuous integration
+
+## Continuous Integration
 
 **Requirements**
 
-- Circle CI Account
-- Github account (for tasks)
-- Docker hub account (but you can adapt it for aws or gcp)
+- GitHub account
+- Docker Hub account (but you can adapt it for AWS or GCP)
 
-**Circle CI**
-You need to connect your Github account with Circle CI in order to get the task progress.
+**GitHub Actions**
 
-Once all is connected every time you push to a branch will run:
+This project uses GitHub Actions for CI/CD. The workflow is defined in `.github/workflows/main.yml`. Every time you push to a branch or create a pull request, it will run:
 
-- main, develop:
+- For all branches and pull requests:
+  - lint (using pre-commit)
+  - test
+
+- For the main branch:
   - lint
   - test
-  - sonarqube gate
-  - build image
-  - push image
-
-- any other branch:
-  - lint
-  - test
-  - sonarqube gate
+  - build Docker image
+  - push Docker image to Docker Hub
 
 **Locally**
 
