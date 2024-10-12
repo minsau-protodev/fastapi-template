@@ -91,9 +91,6 @@ In order to use this project as a base for common projects it must have a way to
 
 this is an optional feature that I recommend to consider but if don't want it you can skip this configuration.
 
-For Sentry we need next env vars:
-- SENTRY_DSN: You can obtain it in your sentry account
-
 For New Relic we need next env vars:
 - NEW_RELIC_CONFIG_FILE: This is almost a constant, usually will have `newrelic.ini` as value, but you can change it for something that fits you.
 - NEW_RELIC_LICENSE_KEY: Seriously?
