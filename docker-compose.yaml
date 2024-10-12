@@ -13,20 +13,24 @@ services:
     environment:
       - RUNTYPE=bash
       - PYTHONDONTWRITEBYTECODE=1
-      - AWS_ACCESS_KEY_ID=DUMMYIDEXAMPLE
-      - AWS_SECRET_ACCESS_KEY=DUMMYEXAMPLEKEY
+      - POSTGRES_SERVER=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=app
     env_file:
       - .env
 
   db:
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
-    image: "amazon/dynamodb-local:latest"
-    container_name: dynamodb-local
-    ports:
-      - "8001:8001"
+    image: postgres:13
     volumes:
-      - "./docker/dynamodb:/home/dynamodblocal/data"
-    working_dir: /home/dynamodblocal
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=app
+    ports:
+      - "5432:5432"
 
 volumes:
+  postgres_data:
   app:

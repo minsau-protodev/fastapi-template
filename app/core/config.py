@@ -27,10 +27,10 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "my_project_name"
     ENVIRONMENT: str = "development"
 
-    POSTGRES_SERVER: str = "localhost"
+    POSTGRES_SERVER: str = "db"
     POSTGRES_USER: str = "postgres"
     POSTGRES_PASSWORD: str = "postgres"
-    POSTGRES_DB: str = "test"
+    POSTGRES_DB: str = "app"
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
