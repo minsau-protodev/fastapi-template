@@ -1,5 +1,7 @@
 # FastAPI Template
 
+[![CI/CD](https://github.com/minsau/fastapi-template/actions/workflows/main.yml/badge.svg)](https://github.com/minsau/fastapi-template/actions/workflows/main.yml)
+
 The purpose of this project is to be used as base boiler plate for future web application built with `Fast API`
 
 ## Development
@@ -45,30 +47,27 @@ Once you have it installed just need to launch (with make up) the core project a
 with this you can go to debug menu and click in green button to launch project.
 
 When you are inside the container you could go to VS Code test section and you can appreciate that test discovery is active.
-## Continuous integration
+
+## Continuous Integration
 
 **Requirements**
 
-- Circle CI Account
-- Github account (for tasks)
-- Docker hub account (but you can adapt it for aws or gcp)
+- GitHub account
+- Docker Hub account (but you can adapt it for AWS or GCP)
 
-**Circle CI**
-You need to connect your Github account with Circle CI in order to get the task progress.
+**GitHub Actions**
 
-Once all is connected every time you push to a branch will run:
+This project uses GitHub Actions for CI/CD. The workflow is defined in `.github/workflows/main.yml`. Every time you push to a branch or create a pull request, it will run:
 
-- main, develop:
+- For all branches and pull requests:
+  - lint (using pre-commit)
+  - test
+
+- For the main branch:
   - lint
   - test
-  - sonarqube gate
-  - build image
-  - push image
-
-- any other branch:
-  - lint
-  - test
-  - sonarqube gate
+  - build Docker image
+  - push Docker image to Docker Hub
 
 **Locally**
 
@@ -84,8 +83,6 @@ In order to show how the build process should work the project will build and pu
 
 - TAG: Image tag (ex. latest)
 - IMAGE_OWNER: Your docker hub user
-- CORE_IMAGE_NAME: Identifier for core image (ex. fastapi-template-core)
-- CELERY_IMAGE_NAME: Identifier for celery image (ex. fastapi-template-celery)
 - DOCKERHUB_PASS: Docker hub pass for push image
 - DOCKERHUB_USERNAME: Docker hub user for push image
 
@@ -93,9 +90,6 @@ In order to show how the build process should work the project will build and pu
 In order to use this project as a base for common projects it must have a way to monitor how the things are in prod environments for this it has a basic integration with [Sentry](https://docs.sentry.io/) (I love it) to track unhandled errors and verify all the path of it,  and new relic in order to track app performance.
 
 this is an optional feature that I recommend to consider but if don't want it you can skip this configuration.
-
-For Sentry we need next env vars:
-- SENTRY_DSN: You can obtain it in your sentry account
 
 For New Relic we need next env vars:
 - NEW_RELIC_CONFIG_FILE: This is almost a constant, usually will have `newrelic.ini` as value, but you can change it for something that fits you.

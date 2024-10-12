@@ -11,7 +11,6 @@ coverage.xml
 .bash_history
 .local
 .cache
-celerybeat-schedule
 .config
 .python_history
 .vscode-server

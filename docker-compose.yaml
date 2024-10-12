@@ -13,54 +13,24 @@ services:
     environment:
       - RUNTYPE=bash
       - PYTHONDONTWRITEBYTECODE=1
+      - POSTGRES_SERVER=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=app
     env_file:
       - .env
 
   db:
     image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=app
     ports:
       - "5432:5432"
-    volumes:
-      - app-db-data:/var/lib/postgresql/data/pgdata
-    env_file:
-      - .env
-    environment:
-      - PGDATA=/var/lib/postgresql/data/pgdata
-
-  redis:
-    image: redis:alpine
-
-  worker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - $PWD:/opt/app
-    environment:
-      - RUNTYPE=celery_worker
-      - PYTHONDONTWRITEBYTECODE=1
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - db
-
-  beater:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - $PWD:/opt/app
-    environment:
-      - RUNTYPE=celery_beater
-      - PYTHONDONTWRITEBYTECODE=1
-    env_file:
-      - .env
-    depends_on:
-      - db
-      - worker
-      - redis
 
 volumes:
+  postgres_data:
   app:
-  app-db-data:

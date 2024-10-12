@@ -1,3 +1,4 @@
+import pytest
 from typing import Callable
 
 from fastapi.testclient import TestClient
